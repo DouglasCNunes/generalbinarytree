@@ -12,7 +12,7 @@ package com.mycompany.generalbinarytree;
 public class GeneralBinaryTree {
 
     public static void main(String[] args) {
-        No testValor = new No(10);
+        No testValor = new No(15);
         ArvoreBinaria arvore = new ArvoreBinaria(testValor);
         No no15 = new No(15);
         arvore.inserirNo(no15);
