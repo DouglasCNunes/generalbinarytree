@@ -16,9 +16,10 @@ public class GeneralBinaryTree {
         ArvoreBinaria arvore = new ArvoreBinaria(testValor);
         No no15 = new No(15);
         arvore.inserirNo(no15);
-        System.out.println(testValor.getDireita().getValor());
-        System.out.println(arvore.buscarNo(15));
-        
-        
+        No no8 = new No(8);
+        arvore.inserirNo(no8);
+        arvore.caminharOrdem();
+        arvore.caminharNivel();
+
     }
 }
