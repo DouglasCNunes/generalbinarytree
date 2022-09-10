@@ -12,11 +12,13 @@ package com.mycompany.generalbinarytree;
 public class GeneralBinaryTree {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-
-        No textValor = new No(15);
-        ArvoreBinaria Arvore = new ArvoreBinaria(textValor);
-
-        System.out.println(Arvore.getRaiz().getValor());
+        No testValor = new No(10);
+        ArvoreBinaria arvore = new ArvoreBinaria(testValor);
+        No no15 = new No(15);
+        arvore.inserirNo(no15);
+        System.out.println(testValor.getDireita().getValor());
+        System.out.println(arvore.buscarNo(15));
+        
+        
     }
 }

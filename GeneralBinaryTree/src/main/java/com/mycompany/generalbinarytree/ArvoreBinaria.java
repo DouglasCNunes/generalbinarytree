@@ -19,23 +19,41 @@ public class ArvoreBinaria {
         this.raiz = raiz;
     }
 
-       /* public No buscarNo(Integer valor) {
-    
-        this.cursor = this.raiz;
+    public boolean buscarNo(Integer valor) {
+       this.cursor = this.raiz;
 
-        while(this.cursor.getValor() != valor || this.cursor.get)
-        if(this.cursor.getValor()==valor) {
-            return this.cursor;
+        while (this.cursor != null) {
+            if (valor < this.cursor.getValor()) {
+                this.cursor = this.cursor.getEsquerda();
+            } else if(valor > this.cursor.getValor()) {
+                this.cursor = this.cursor.getDireita();
+            } else {
+                return true;
+            }
         }
+        return false;
     }
-        */
+    
 
-    public void InserirNo(No no) {
+    public void inserirNo(No no) {
         this.valor = no.getValor();
         this.cursor = this.raiz;
 
-        while(this.cursor.getValor() > valor || this.cursor.getValor() < valor) {
-            if(this.cursor.getEsquerda()>null)
+        while (this.cursor.getValor() > valor || this.cursor.getValor() < valor) {
+            
+            if (this.valor < this.cursor.getValor() && this.cursor.getEsquerda() != null) {
+                this.cursor = this.cursor.getEsquerda();
+            } else if(this.valor > this.cursor.getValor() && this.cursor.getDireita() != null) {
+                this.cursor = this.cursor.getDireita();
+            } else {
+                if (this.valor < this.cursor.getValor()) {
+                    this.cursor.setEsquerda(no);
+                    return;
+                } else if (this.valor > this.cursor.getValor()) {
+                    this.cursor.setDireita(no);
+                    return;
+                }
+            }
         }
     }
 }
