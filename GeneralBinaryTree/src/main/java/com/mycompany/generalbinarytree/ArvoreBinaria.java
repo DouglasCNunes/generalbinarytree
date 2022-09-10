@@ -57,4 +57,24 @@ public class ArvoreBinaria {
             }
         }
     }
+
+    public No piorCaso() {
+        this.cursor = this.raiz;
+        while(this.cursor.getEsquerda() != null) {
+            this.cursor = this.cursor.getEsquerda();
+        }
+        return this.cursor;
+    }
+
+    public No melhorCaso() {
+        this.cursor = this.raiz;
+        while(this.cursor.getDireita() != null) {
+            this.cursor = this.cursor.getDireita();
+        }
+        return this.cursor;
+    }
+
+    public int getAltura() {
+        if()
+    }
 }
