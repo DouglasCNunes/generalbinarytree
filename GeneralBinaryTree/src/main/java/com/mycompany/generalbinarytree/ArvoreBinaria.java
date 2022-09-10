@@ -33,7 +33,6 @@ public class ArvoreBinaria {
         }
         return false;
     }
-    
 
     public void inserirNo(No no) {
         this.valor = no.getValor();
@@ -48,9 +47,11 @@ public class ArvoreBinaria {
             } else {
                 if (this.valor < this.cursor.getValor()) {
                     this.cursor.setEsquerda(no);
+                    this.qtdElemento++;
                     return;
                 } else if (this.valor > this.cursor.getValor()) {
                     this.cursor.setDireita(no);
+                    this.qtdElemento++;
                     return;
                 }
             }
