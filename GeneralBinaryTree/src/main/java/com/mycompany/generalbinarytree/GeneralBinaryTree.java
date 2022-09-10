@@ -13,5 +13,10 @@ public class GeneralBinaryTree {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
+
+        No textValor = new No(15);
+        ArvoreBinaria Arvore = new ArvoreBinaria(textValor);
+
+        System.out.println(Arvore.getRaiz().getValor());
     }
 }
