@@ -9,7 +9,7 @@ public class ArvoreBinaria {
     private No raiz;
     private Integer valor;
     private No cursor;
-    private No cursorTemporario;
+    private No cursorPai;
 
     public ArvoreBinaria(No raiz) {
         this.raiz = raiz;
@@ -60,6 +60,45 @@ public class ArvoreBinaria {
                 }
             }
         }
+    }
+    
+    public boolean removerNo(Integer valor) {
+        this.cursor = this.raiz;
+        this.cursorPai = this.raiz;
+        
+        while (this.cursor.getValor() != valor) {
+            this.cursorPai = this.cursor;
+            if (this.cursor.getValor() < valor) {
+                this.cursor = this.cursor.getEsquerda();
+            } else if (this.cursor.getValor() > valor) {
+                this.cursor = this.cursor.getDireita();
+            } else {
+                return false;
+            }
+        }
+        
+        // Sem filhos
+        if (this.cursor.getEsquerda() == null && this.cursor.getDireita() == null) {
+            if (this.cursorPai.getEsquerda().getValor() == valor) {
+                this.cursorPai.setEsquerda(null);
+            } else if (this.cursorPai.getDireita().getValor() == valor) {
+                this.cursorPai.setDireita(null);
+            }
+        }
+        // Um filho na esquerda
+        else if (this.cursor.getEsquerda() != null && this.cursor.getDireita() == null) {
+            this.cursorPai.setEsquerda(this.cursor.getEsquerda());
+        }
+        // Um filho na direita
+        else if (this.cursor.getEsquerda() == null && this.cursor.getDireita() != null) {
+            this.cursorPai.setDireita(this.cursor.getDireita());
+        }
+        // Dois filhos
+        else {
+            // TODO
+        }
+        
+        return true;
     }
     
     public No piorCaso() {
