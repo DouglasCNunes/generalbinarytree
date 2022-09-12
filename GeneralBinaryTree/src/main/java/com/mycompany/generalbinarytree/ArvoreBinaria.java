@@ -135,12 +135,12 @@ public class ArvoreBinaria {
     public void caminharNivel() {
         List<No> array = new ArrayList<>();
         array.add(this.getRaiz());
-        
-        for (int i = 0; i < array.size(); i++) {
-            System.out.println(array.get(i).getValor());
-            if (array.get(i).getEsquerda() != null) { array.add(array.get(i).getEsquerda()); }
-            if (array.get(i).getDireita() != null) { array.add(array.get(i).getDireita()); }
+
+        while (array != null) {
+            System.out.println(array.get[0]);
+            if (array.get(0).getEsquerda() != null) { array.add(array.get(0).getEsquerda()); }
+            if (array.get(0).getDireita() != null) { array.add(array.get(0).getDireita()); }
+            array.remove(0);
         }
-           
     }
 }
