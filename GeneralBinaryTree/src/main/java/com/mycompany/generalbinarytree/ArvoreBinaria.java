@@ -6,10 +6,14 @@ import java.util.List;
 public class ArvoreBinaria {
     private int altura;
     private int qtdElemento;
-    private No raiz;
+    private No<T> raiz;
     private Integer valor;
     private No cursor;
     private No cursorPai;
+
+    public No getRaiz() {
+        return raiz;
+    }
 
     public boolean buscarNo(Integer valor) {
        this.cursor = this.raiz;
@@ -93,7 +97,7 @@ public class ArvoreBinaria {
         return true;
     }
     
-    public No piorCaso() {
+    public No menorElemento() {
         this.cursor = this.raiz;
         while(this.cursor.getEsquerda() != null) {
             this.cursor = this.cursor.getEsquerda();
@@ -101,7 +105,7 @@ public class ArvoreBinaria {
         return this.cursor;
     }
 
-    public No melhorCaso() {
+    public No maiorElemento() {
         this.cursor = this.raiz;
         while(this.cursor.getDireita() != null) {
             this.cursor = this.cursor.getDireita();

@@ -1,37 +1,37 @@
 package com.mycompany.generalbinarytree;
 
-public class No {
-    private No esquerda;
-    private No direita;
-    private Integer valor;
+public class No<T> {
+    private No<T> esquerda;
+    private No<T> direita;
+    private T valor;
 
-    public No(Integer valor){
+    public No(T valor){
         this.valor = valor;
         this.esquerda = null;
         this.direita = null;
     }
 
-    public Integer getValor() {
+    public T getValor() {
         return valor;
     }
 
-    public void setValor(Integer valor) {
+    public void setValor(T valor) {
         this.valor = valor;
     }
 
-    public No getDireita() {
+    public No<T> getDireita() {
         return direita;
     }
 
-    public No getEsquerda() {
+    public No<T> getEsquerda() {
         return esquerda;
     }
 
-    public void setDireita(No direita) {
+    public void setDireita(No<T> direita) {
         this.direita = direita;
     }
 
-    public void setEsquerda(No esquerda) {
+    public void setEsquerda(No<T> esquerda) {
         this.esquerda = esquerda;
     }
 }
