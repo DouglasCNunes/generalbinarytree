@@ -11,18 +11,6 @@ public class ArvoreBinaria {
     private No cursor;
     private No cursorPai;
 
-    public ArvoreBinaria(No raiz) {
-        this.raiz = raiz;
-        this.qtdElemento = 1;
-    }
-
-    public No getRaiz() {
-        return raiz;
-    }
-    public void setRaiz(No raiz) {
-        this.raiz = raiz;
-    }
-
     public boolean buscarNo(Integer valor) {
        this.cursor = this.raiz;
 
@@ -39,6 +27,12 @@ public class ArvoreBinaria {
     }
 
     public void inserirNo(No no) {
+        if (this.raiz == null) {
+            this.raiz = no;
+            this.qtdElemento++;
+            return;
+        }
+        
         this.valor = no.getValor();
         this.cursor = this.raiz;
 
@@ -51,13 +45,11 @@ public class ArvoreBinaria {
             } else {
                 if (this.valor < this.cursor.getValor()) {
                     this.cursor.setEsquerda(no);
-                    this.qtdElemento++;
-                    return;
                 } else if (this.valor > this.cursor.getValor()) {
                     this.cursor.setDireita(no);
-                    this.qtdElemento++;
-                    return;
                 }
+            this.qtdElemento++;
+            return;
             }
         }
     }
