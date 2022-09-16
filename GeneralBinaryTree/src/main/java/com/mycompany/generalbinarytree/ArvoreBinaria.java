@@ -3,23 +3,26 @@ package com.mycompany.generalbinarytree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArvoreBinaria {
-    private int altura;
+public class ArvoreBinaria<T extends Comparable<T>> {
+    //private int altura;
     private int qtdElemento;
     private No<T> raiz;
-    private Integer valor;
-    private No cursor;
-    private No cursorPai;
+    private No<T> valor;
+    private No<T> cursor;
+    private No<T> cursorPai;
 
-    public No getRaiz() {
-        return raiz;
-    }
+    public ArvoreBinaria() { raiz = null;}
 
-    public boolean buscarNo(Integer valor) {
-       this.cursor = this.raiz;
+    public No<T> getRaiz() { return raiz; }
+
+    public boolean buscarNo(T valor) {
+        if(raiz==null) { return false;}
+        
+        this.cursor = this.raiz;
 
         while (this.cursor != null) {
-            if (valor < this.cursor.getValor()) {
+            if(valor.compareTo(cursor.getValor())<) {
+            //if (valor < this.cursor.getValor()) {
                 this.cursor = this.cursor.getEsquerda();
             } else if(valor > this.cursor.getValor()) {
                 this.cursor = this.cursor.getDireita();
@@ -112,10 +115,6 @@ public class ArvoreBinaria {
         }
         return this.cursor;
     }
-
-//    public int getAltura() {
-//        if()
-//    }
   
     public void caminharOrdem() {
         recursividadeCaminharOrdem(this.getRaiz());
