@@ -1,6 +1,6 @@
 package com.mycompany.generalbinarytree;
 
-public class Aluno<T extends Comparable<T>> implements Comparable<Aluno<T>> {
+public class Aluno implements Comparable<Aluno> {
     private Integer matricula;
     private String nome;
     private Integer idade;
@@ -20,8 +20,12 @@ public class Aluno<T extends Comparable<T>> implements Comparable<Aluno<T>> {
     public void setIdade(int idade) {this.idade = idade;}
 
     @Override
-    public int compareTo(Aluno<T> o) {
+    public int compareTo(Aluno o) {
         return this.matricula.compareTo(o.getMatricula());
+    }
+    @Override
+    public String toString() {
+        return this.matricula + " + " + this.nome + " + " + this.idade;
     }
 
 }

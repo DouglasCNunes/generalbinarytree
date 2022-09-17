@@ -7,8 +7,6 @@ package com.mycompany.generalbinarytree;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -18,26 +16,26 @@ import java.util.Scanner;
 public class GeneralBinaryTree {
 
     public static void main(String[] args) throws FileNotFoundException {
-        File file = new File("/Users/Douglas/Desktop/Codigos/generalbinarytree/GeneralBinaryTree/src/main/java/com/mycompany/generalbinarytree/entradaBalanceada1000.txt");
+        File file = new File("/Users/Douglas/Desktop/Codigos/generalbinarytree/GeneralBinaryTree/src/main/java/com/mycompany/generalbinarytree/entradaBalanceada30.txt");
         Scanner scan = new Scanner(file);
-        
+        ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<Aluno>();
+        Aluno removealuno = new Aluno(1, "a", 1);
 
         //ArvoreBinaria arvore = new ArvoreBinaria();
 
-        List<Aluno> list = new ArrayList<>();
-
         String alunoLine;
+        alunoLine = scan.nextLine();
         while(scan.hasNextLine()) {
             alunoLine = scan.nextLine();
             String[] stringParts = alunoLine.split(";");
             Aluno novo = new Aluno(Integer.valueOf(stringParts[0]), stringParts[1], Integer.valueOf(stringParts[2]));
-            list.add(novo);
+            if(novo.getMatricula()==2000000002) {
+                removealuno = novo;
+            }
+            arvore.inserirNo(novo);
         }
         scan.close();
 
-        System.out.println(list.get(3).getNome());
-
-        //Loop para inserir na árvore os valores (0,3,6,9,12,18,21,24,27,30).
-        System.out.println();
+        arvore.caminharNivel();
     }
 }

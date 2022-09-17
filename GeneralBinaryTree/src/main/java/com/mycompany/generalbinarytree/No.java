@@ -1,6 +1,6 @@
 package com.mycompany.generalbinarytree;
 
-public class No<T> {
+public class No<T extends Comparable<? super T>> {
     private No<T> esquerda;
     private No<T> direita;
     private T valor;

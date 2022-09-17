@@ -1,7 +1,0 @@
-package com.mycompany.generalbinarytree;
-
-public interface MyInterface<T extends Comparable<T>> {
-
-    abstract int compareTo(T o);
-
-}

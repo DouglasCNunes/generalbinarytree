@@ -3,17 +3,17 @@ package com.mycompany.generalbinarytree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArvoreBinaria<T extends Comparable<T>> {
+public class ArvoreBinaria<T extends Comparable<? super T>> {
     //private int altura;
     private int qtdElemento;
     private No<T> raiz;
-    private No<T> valor;
+    private T valor;
     private No<T> cursor;
     private No<T> cursorPai;
 
-    public ArvoreBinaria() { raiz = null;}
+    public ArvoreBinaria() {this.raiz = null;}
 
-    public No<T> getRaiz() { return raiz; }
+    public No<T> getRaiz() {return raiz;}
 
     public boolean buscarNo(T valor) {
         if(raiz==null) { return false;}
@@ -21,10 +21,9 @@ public class ArvoreBinaria<T extends Comparable<T>> {
         this.cursor = this.raiz;
 
         while (this.cursor != null) {
-            if(valor.compareTo(cursor.getValor())<) {
-            //if (valor < this.cursor.getValor()) {
+            if(valor.compareTo(cursor.getValor()) < 0) {
                 this.cursor = this.cursor.getEsquerda();
-            } else if(valor > this.cursor.getValor()) {
+            } else if(valor.compareTo(cursor.getValor()) > 0) {
                 this.cursor = this.cursor.getDireita();
             } else {
                 return true;
@@ -33,74 +32,120 @@ public class ArvoreBinaria<T extends Comparable<T>> {
         return false;
     }
 
-    public void inserirNo(No no) {
+    public void inserirNo(T novo) {
+        No<T> novoNo = new No<T>(novo);
         if (this.raiz == null) {
-            this.raiz = no;
+            this.raiz = novoNo;
             this.qtdElemento++;
             return;
         }
         
-        this.valor = no.getValor();
+        this.valor = novo;
         this.cursor = this.raiz;
 
-        while (this.cursor.getValor() > valor || this.cursor.getValor() < valor) {
-            
-            if (this.valor < this.cursor.getValor() && this.cursor.getEsquerda() != null) {
+        while(valor.compareTo(cursor.getValor()) != 0) {            
+            if (valor.compareTo(cursor.getValor()) < 0 && this.cursor.getEsquerda() != null) {
                 this.cursor = this.cursor.getEsquerda();
-            } else if(this.valor > this.cursor.getValor() && this.cursor.getDireita() != null) {
+            } else if(valor.compareTo(cursor.getValor()) > 0 && this.cursor.getDireita() != null) {
                 this.cursor = this.cursor.getDireita();
             } else {
-                if (this.valor < this.cursor.getValor()) {
-                    this.cursor.setEsquerda(no);
-                } else if (this.valor > this.cursor.getValor()) {
-                    this.cursor.setDireita(no);
+                if (valor.compareTo(cursor.getValor()) < 0) {
+                    this.cursor.setEsquerda(novoNo);
+                } else if (valor.compareTo(cursor.getValor()) > 0) {
+                    this.cursor.setDireita(novoNo);
                 }
             this.qtdElemento++;
             return;
             }
         }
     }
-    
-    public boolean removerNo(Integer valor) {
-        this.cursor = this.raiz;
-        this.cursorPai = this.raiz;
-        
-        while (this.cursor.getValor() != valor) {
+
+    public void caminharOrdem() {
+        recursividadeCaminharOrdem(this.getRaiz());
+    }
+
+    private void recursividadeCaminharOrdem(No<T> no) {
+        if(no != null){
+            recursividadeCaminharOrdem(no.getEsquerda());
+            System.out.println(no.getValor().toString());
+            recursividadeCaminharOrdem(no.getDireita());
+        }
+    }
+
+    public boolean removeNo(T valor) {
+        this.cursor = raiz;
+        this.cursorPai = raiz;
+        boolean ehFilhoEsq = true;
+
+        while(cursor.getValor().compareTo(valor)!=0) {
             this.cursorPai = this.cursor;
-            if (this.cursor.getValor() < valor) {
-                this.cursor = this.cursor.getEsquerda();
-            } else if (this.cursor.getValor() > valor) {
-                this.cursor = this.cursor.getDireita();
+            //Comparação com o valor a ser removido e o nó atual a ser analisado
+            if(valor.compareTo(cursor.getValor()) < 0) {
+                ehFilhoEsq = true;
+                cursor = cursor.getEsquerda();
             } else {
+                ehFilhoEsq = false;
+                cursor = cursor.getDireita();
+            }
+            if(cursor==null) { //Valor não encontrado
                 return false;
             }
         }
-        
-        // Sem filhos
-        if (this.cursor.getEsquerda() == null && this.cursor.getDireita() == null) {
-            if (this.cursorPai.getEsquerda().getValor() == valor) {
-                this.cursorPai.setEsquerda(null);
-            } else if (this.cursorPai.getDireita().getValor() == valor) {
-                this.cursorPai.setDireita(null);
+        if(cursor.getEsquerda()==null && cursor.getDireita()==null) { // <<<< No a ser removido não tem filhos >>>>>
+            if(cursor==raiz) {
+                raiz=null;
+            } else if (ehFilhoEsq) { //Se é filho esquerda, remove do curso pai a esquerda
+                cursorPai.setEsquerda(null);
+            } else { //Se é filho direita, remove do curso pai a direita
+                cursorPai.setDireita(null);
             }
+        } else if(cursor.getDireita()==null) { // <<<< No a ser removido tem filho a Esquerda >>>>
+            if(cursor==raiz) {
+                raiz=cursor.getEsquerda();
+            } else if(ehFilhoEsq) {
+                cursorPai.setEsquerda(cursor.getEsquerda());
+            } else {
+                cursorPai.setDireita(cursor.getEsquerda());
+            }
+        } else if(cursor.getEsquerda()==null) { // <<<< No a ser removido tem filho a Direita >>>>
+            if(cursor==raiz) {
+                raiz=cursor.getDireita();
+            } else if(ehFilhoEsq) {
+                cursorPai.setDireita(cursor.getDireita());
+            } else {
+                cursorPai.setEsquerda(cursor.getDireita());
+            }
+        } else {
+            No<T> proxEsq = retornaNoProx(cursor);
+            if(cursor==raiz) {
+                raiz = proxEsq;
+            } else if(ehFilhoEsq) {
+                cursorPai.setEsquerda(proxEsq);
+            } else {
+                cursorPai.setDireita(proxEsq);
+            }
+            proxEsq.setDireita(cursor.getDireita());
         }
-        // Um filho na esquerda
-        else if (this.cursor.getEsquerda() != null && this.cursor.getDireita() == null) {
-            this.cursorPai.setEsquerda(this.cursor.getEsquerda());
-        }
-        // Um filho na direita
-        else if (this.cursor.getEsquerda() == null && this.cursor.getDireita() != null) {
-            this.cursorPai.setDireita(this.cursor.getDireita());
-        }
-        // Dois filhos
-        else {
-            // TODO
-        }
-        
         return true;
     }
-    
-    public No menorElemento() {
+
+    private No<T> retornaNoProx(No<T> atual) { // Função que retorna o nó de valor anterior (proxEsq) ao nó a ser removido
+        No<T> proxEsq = atual;
+        No<T> proEsqPai = atual;
+        No<T> cursor = atual.getEsquerda();
+        while(cursor!=null) {
+            proEsqPai = proxEsq;
+            proxEsq = cursor;
+            cursor = proxEsq.getDireita();
+        }
+        if(proxEsq.getValor().compareTo(atual.getEsquerda().getValor())!=0){
+            proEsqPai.setDireita(proxEsq.getEsquerda());
+            proxEsq.setEsquerda(atual.getEsquerda());
+        }
+        return proxEsq;
+    }
+
+    public No<T> menorElemento() {
         this.cursor = this.raiz;
         while(this.cursor.getEsquerda() != null) {
             this.cursor = this.cursor.getEsquerda();
@@ -108,31 +153,19 @@ public class ArvoreBinaria<T extends Comparable<T>> {
         return this.cursor;
     }
 
-    public No maiorElemento() {
+    public No<T> maiorElemento() {
         this.cursor = this.raiz;
         while(this.cursor.getDireita() != null) {
             this.cursor = this.cursor.getDireita();
         }
         return this.cursor;
     }
-  
-    public void caminharOrdem() {
-        recursividadeCaminharOrdem(this.getRaiz());
-    }
-    
-    private void recursividadeCaminharOrdem(No no) {
-        if (no.getEsquerda() != null) { recursividadeCaminharOrdem(no.getEsquerda()); }
-            System.out.println(no.getValor());
-        if (no.getDireita() != null) { recursividadeCaminharOrdem(no.getDireita()); }
-        return;
-    }
-    
+      
     public void caminharNivel() {
-        List<No> array = new ArrayList<>();
+        List<No<T>> array = new ArrayList<>();
         array.add(this.getRaiz());
-
-        while (array != null) {
-            System.out.println(array.get[0]);
+        while (array.size() > 0) {
+            System.out.println(array.get(0).getValor().toString());
             if (array.get(0).getEsquerda() != null) { array.add(array.get(0).getEsquerda()); }
             if (array.get(0).getDireita() != null) { array.add(array.get(0).getDireita()); }
             array.remove(0);
