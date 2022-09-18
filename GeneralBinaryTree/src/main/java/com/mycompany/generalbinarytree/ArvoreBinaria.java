@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArvoreBinaria<T extends Comparable<? super T>> {
-    //private int altura;
-    private int qtdElemento;
     private No<T> raiz;
     private T valor;
     private No<T> cursor;
@@ -36,7 +34,6 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
         No<T> novoNo = new No<T>(novo);
         if (this.raiz == null) {
             this.raiz = novoNo;
-            this.qtdElemento++;
             return;
         }
         
@@ -54,7 +51,6 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
                 } else if (valor.compareTo(cursor.getValor()) > 0) {
                     this.cursor.setDireita(novoNo);
                 }
-            this.qtdElemento++;
             return;
             }
         }
@@ -170,5 +166,24 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
             if (array.get(0).getDireita() != null) { array.add(array.get(0).getDireita()); }
             array.remove(0);
         }
+    }
+
+    public int altura() {
+        return altura(getRaiz());
+    }
+
+    private int altura(No<T> no) {
+        if(no==null) {return -1;}
+        return 1 + Math.max(altura(no.getEsquerda()),altura(no.getDireita()));
+    }
+
+    public int qtdElemento() {
+        return qtdElementoRecursividade(getRaiz());
+
+    }
+
+    private int qtdElementoRecursividade(No<T> no) {
+        if(no == null){return 0;}
+        return 1 + qtdElementoRecursividade(no.getEsquerda()) + qtdElementoRecursividade(no.getDireita());
     }
 }
