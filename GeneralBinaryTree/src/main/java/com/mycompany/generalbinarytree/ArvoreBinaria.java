@@ -70,7 +70,7 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
     }
 
     public void caminharOrdem() throws IOException {
-        this.escritor = new FileWriter("arquivo.csv");
+        this.escritor = new FileWriter("csv.txt");
         System.out.println(this.qtdElemento());
         this.escritor.write(String.valueOf(this.qtdElemento()).concat("\n"));
         recursividadeCaminharOrdem(this.getRaiz());
