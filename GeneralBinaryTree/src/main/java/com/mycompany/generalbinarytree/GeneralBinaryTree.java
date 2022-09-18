@@ -36,7 +36,7 @@ public class GeneralBinaryTree {
 
     public static void main(String[] args) throws FileNotFoundException {
         //Leitura do arquivo de matrículas dos alunos
-        File file = new File("./src/main/java/com/mycompany/generalbinarytree/entradaBalanceada30.txt");
+        File file = new File("./src/main/java/com/mycompany/generalbinarytree/entradaOrdenada1000.txt");
         Scanner scan = new Scanner(file);
         ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<Aluno>();
         String alunoLine;
@@ -69,9 +69,11 @@ public class GeneralBinaryTree {
                     System.out.print("\nDigite a matrícula: ");
                     int matriculaBusca = input.nextInt();
                     Aluno alunoBusca = new Aluno(matriculaBusca);
+                    System.out.println("\nTimestamp antes: " + System.currentTimeMillis());
                     if(arvore.buscarNo(alunoBusca)==null){
                         System.out.println("\nAluno com a matrícula "+matriculaBusca+" nao foi encontrado.");
                     } else {System.out.println(arvore.buscarNo(alunoBusca).toString());}
+                    System.out.println("\nTimestamp depois: " + System.currentTimeMillis());
                     break;
                 case 3:
                     System.out.println("------------- Excluir por matrícula -------------");
