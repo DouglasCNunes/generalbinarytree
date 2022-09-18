@@ -1,5 +1,8 @@
 package com.mycompany.generalbinarytree;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,8 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
     private T valor;
     private No<T> cursor;
     private No<T> cursorPai;
+    private File arquivo;
+    private FileWriter escritor;
 
     public ArvoreBinaria() {this.raiz = null;}
 
@@ -64,14 +69,16 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
         return false;
     }
 
-    public void caminharOrdem() {
+    public void caminharOrdem() throws IOException {
+        this.escritor = new FileWriter("arquivo.csv");
         recursividadeCaminharOrdem(this.getRaiz());
+        this.escritor.close();
     }
 
-    private void recursividadeCaminharOrdem(No<T> no) {
+    private void recursividadeCaminharOrdem(No<T> no) throws IOException {
         if(no != null){
             recursividadeCaminharOrdem(no.getEsquerda());
-            System.out.println(no.getValor());
+            this.escritor.write(no.getValor().toString().concat("\n"));
             recursividadeCaminharOrdem(no.getDireita());
         }
     }

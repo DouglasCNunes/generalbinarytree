@@ -29,7 +29,7 @@ public class Aluno implements Comparable<Aluno> {
     }
     @Override
     public String toString() {
-        return this.matricula + ";" + this.nome + ";" + this.nota + ";";
+        return this.matricula + ";" + this.nome + ";" + this.nota;
     }
 
 }
