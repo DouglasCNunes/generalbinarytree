@@ -3,25 +3,25 @@ package com.mycompany.generalbinarytree;
 public class Aluno implements Comparable<Aluno> {
     private Integer matricula;
     private String nome;
-    private Integer idade;
+    private Integer nota;
 
     public Aluno (int matricula){
         this.matricula = matricula;
     }
 
-    public Aluno (int matricula, String nome, int idade) {
+    public Aluno (int matricula, String nome, int nota) {
         this.matricula = matricula;
         this.nome = nome;
-        this.idade = idade;
+        this.nota = nota;
     }
 
     public int getMatricula() {return matricula;}
     public String getNome() {return nome;}
-    public int getIdade() {return idade;}
+    public int getNota() {return nota;}
 
     public void setMatricula(int matricula) {this.matricula = matricula;}
     public void setNome(String nome) {this.nome = nome;}
-    public void setIdade(int idade) {this.idade = idade;}
+    public void setIdade(int nota) {this.nota = nota;}
 
     @Override
     public int compareTo(Aluno o) {
@@ -29,7 +29,7 @@ public class Aluno implements Comparable<Aluno> {
     }
     @Override
     public String toString() {
-        return this.matricula + " + " + this.nome + " + " + this.idade;
+        return this.matricula + " + " + this.nome + " + " + this.nota;
     }
 
 }

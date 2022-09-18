@@ -14,6 +14,7 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
     private T valor;
     private No<T> cursor;
     private No<T> cursorPai;
+    List<No<T>> listaCSV;
 
     public ArvoreBinaria() {this.raiz = null;}
 
@@ -65,13 +66,15 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
     }
 
     public void caminharOrdem() {
+        listaCSV = new ArrayList<>();
         recursividadeCaminharOrdem(this.getRaiz());
+        System.out.println(listaCSV);
     }
 
     private void recursividadeCaminharOrdem(No<T> no) {
         if(no != null){
             recursividadeCaminharOrdem(no.getEsquerda());
-            System.out.println(no.getValor().toString());
+            this.listaCSV.add(no);
             recursividadeCaminharOrdem(no.getDireita());
         }
     }

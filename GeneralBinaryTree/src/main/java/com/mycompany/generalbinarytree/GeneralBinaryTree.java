@@ -35,7 +35,7 @@ public class GeneralBinaryTree {
 
     public static void main(String[] args) throws FileNotFoundException {
         //Leitura do arquivo de matrículas dos alunos
-        File file = new File("/Users/Douglas/Desktop/Codigos/generalbinarytree/GeneralBinaryTree/src/main/java/com/mycompany/generalbinarytree/entradaBalanceada30.txt");
+        File file = new File("./src/main/java/com/mycompany/generalbinarytree/entradaBalanceada30.txt");
         Scanner scan = new Scanner(file);
         ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<Aluno>();
         String alunoLine;
@@ -103,6 +103,7 @@ public class GeneralBinaryTree {
             menu();
             escolha = input.nextInt();
         }
+        arvore.caminharOrdem();
         input.close();
     }
 }
