@@ -5,6 +5,10 @@ public class Aluno implements Comparable<Aluno> {
     private String nome;
     private Integer idade;
 
+    public Aluno (int matricula){
+        this.matricula = matricula;
+    }
+
     public Aluno (int matricula, String nome, int idade) {
         this.matricula = matricula;
         this.nome = nome;

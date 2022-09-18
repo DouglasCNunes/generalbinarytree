@@ -3,6 +3,12 @@ package com.mycompany.generalbinarytree;
 import java.util.ArrayList;
 import java.util.List;
 
+/* <<< Autores do trabalho >>>
+ *  Douglas Nunes
+ *  Guilherme Bleidão
+ */ 
+
+
 public class ArvoreBinaria<T extends Comparable<? super T>> {
     private No<T> raiz;
     private T valor;
@@ -13,8 +19,8 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
 
     public No<T> getRaiz() {return raiz;}
 
-    public boolean buscarNo(T valor) {
-        if(raiz==null) { return false;}
+    public T buscarNo(T valor) {
+        if(raiz==null) { return null;}
         
         this.cursor = this.raiz;
 
@@ -24,17 +30,17 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
             } else if(valor.compareTo(cursor.getValor()) > 0) {
                 this.cursor = this.cursor.getDireita();
             } else {
-                return true;
+                return this.cursor.getValor();
             }
         }
-        return false;
+        return null;
     }
 
-    public void inserirNo(T novo) {
+    public boolean inserirNo(T novo) {
         No<T> novoNo = new No<T>(novo);
         if (this.raiz == null) {
             this.raiz = novoNo;
-            return;
+            return true;
         }
         
         this.valor = novo;
@@ -48,12 +54,14 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
             } else {
                 if (valor.compareTo(cursor.getValor()) < 0) {
                     this.cursor.setEsquerda(novoNo);
+                    return true;
                 } else if (valor.compareTo(cursor.getValor()) > 0) {
                     this.cursor.setDireita(novoNo);
+                    return true;
                 }
-            return;
             }
         }
+        return false;
     }
 
     public void caminharOrdem() {
