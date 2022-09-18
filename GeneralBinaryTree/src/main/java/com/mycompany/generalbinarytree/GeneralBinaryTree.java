@@ -7,6 +7,7 @@ package com.mycompany.generalbinarytree;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 import javax.swing.text.AbstractDocument.BranchElement;
@@ -103,7 +104,11 @@ public class GeneralBinaryTree {
             menu();
             escolha = input.nextInt();
         }
-        arvore.caminharOrdem();
+        try {
+            arvore.caminharOrdem();
+        } catch (IOException e) {
+            System.out.println("Não foi possível gerar o arquivo csv.");
+        }
         input.close();
     }
 }
