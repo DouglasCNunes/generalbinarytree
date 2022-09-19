@@ -19,6 +19,7 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
     private No<T> cursorPai;
     private File arquivo;
     private FileWriter escritor;
+    private No<T> ultimoNoInserido;
 
     public ArvoreBinaria() {this.raiz = null;}
 
@@ -68,10 +69,19 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
         }
         return false;
     }
+    
+    public void inserirNoOrdenado(T novo) {
+        No<T> novoNo = new No<T>(novo);
+        if (this.raiz == null) {
+            this.raiz = novoNo;
+        } else {
+            this.ultimoNoInserido.setDireita(novoNo);
+        }
+        this.ultimoNoInserido = novoNo;
+    }
 
     public void caminharOrdem() throws IOException {
         this.escritor = new FileWriter("csv.txt");
-        System.out.println(this.qtdElemento());
         this.escritor.write(String.valueOf(this.qtdElemento()).concat("\n"));
         recursividadeCaminharOrdem(this.getRaiz());
         this.escritor.close();
@@ -195,7 +205,9 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
     }
 
     public int qtdElemento() {
-        return qtdElementoRecursividade(getRaiz());
+        int teste = qtdElementoRecursividade(getRaiz());
+        System.out.println(teste);
+        return teste;
 
     }
 
