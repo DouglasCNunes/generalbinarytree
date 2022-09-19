@@ -36,22 +36,25 @@ public class GeneralBinaryTree {
 
     public static void main(String[] args) throws FileNotFoundException {
         //Leitura do arquivo de matrículas dos alunos
-        String nomeArquivoEntrada = "entradaOrdenada20000000.txt";
+        String nomeArquivoEntrada = "entradaOrdenada20000.txt";
+        boolean cheat = false;
         File file = new File("./src/main/java/com/mycompany/generalbinarytree/" + nomeArquivoEntrada);
         Scanner scan = new Scanner(file);
         ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<Aluno>();
         String alunoLine;
         alunoLine = scan.nextLine();
+        System.out.println("\nTimestamp antes do carregamento: " + System.currentTimeMillis());
         while(scan.hasNextLine()) {
             alunoLine = scan.nextLine();
             String[] stringParts = alunoLine.split(";");
             Aluno novo = new Aluno(Integer.valueOf(stringParts[0]), stringParts[1], Integer.valueOf(stringParts[2]));
-            if (nomeArquivoEntrada.indexOf("Ordenada") >= 0) {
+            if (nomeArquivoEntrada.indexOf("Ordenada") >= 0 && cheat == true) {
                 arvore.inserirNoOrdenado(novo);
             } else {
                 arvore.inserirNo(novo);
             }
         }
+        System.out.println("\nTimestamp depois do carregamento: " + System.currentTimeMillis());
         scan.close();
 
         //Menu
