@@ -36,7 +36,7 @@ public class GeneralBinaryTree {
 
     public static void main(String[] args) throws FileNotFoundException {
         //Leitura do arquivo de matrículas dos alunos
-        String nomeArquivoEntrada = "entradaBalanceada2000000.txt";
+        String nomeArquivoEntrada = "entradaOrdenada6000000.txt";
         boolean cheat = true;
         File file = new File("./src/main/java/com/mycompany/generalbinarytree/" + nomeArquivoEntrada);
         Scanner scan = new Scanner(file);
@@ -67,8 +67,8 @@ public class GeneralBinaryTree {
             switch(escolha){
                 case 1:
                     System.out.println("-------------- Exibir Estatísticas --------------");
-                    System.out.println("Quantidade total de elementos: " + arvore.qtdElemento());
-                    System.out.println("Altura da árvore: " + arvore.altura());
+                    System.out.println("Quantidade total de elementos: " + arvore.getQntElementos());
+                    System.out.println("Altura da árvore: " + arvore.getAltura());
                     System.out.println("Maior elemento: " + arvore.maiorElemento().getValor().toString());
                     System.out.println("Menor elemento: " + arvore.menorElemento().getValor().toString());
                     break;

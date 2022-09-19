@@ -20,6 +20,7 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
     private File arquivo;
     private FileWriter escritor;
     private No<T> ultimoNoInserido;
+    private int qntElementos;
 
     public ArvoreBinaria() {this.raiz = null;}
 
@@ -46,6 +47,7 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
         No<T> novoNo = new No<T>(novo);
         if (this.raiz == null) {
             this.raiz = novoNo;
+            qntElementos++;
             return true;
         }
         
@@ -60,9 +62,11 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
             } else {
                 if (valor.compareTo(cursor.getValor()) < 0) {
                     this.cursor.setEsquerda(novoNo);
+                    qntElementos++;
                     return true;
                 } else if (valor.compareTo(cursor.getValor()) > 0) {
                     this.cursor.setDireita(novoNo);
+                    qntElementos++;
                     return true;
                 }
             }
@@ -78,22 +82,35 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
             this.ultimoNoInserido.setDireita(novoNo);
         }
         this.ultimoNoInserido = novoNo;
+        qntElementos++;
     }
 
     public void caminharOrdem() throws IOException {
-        this.escritor = new FileWriter("csv.txt");
-        this.escritor.write(String.valueOf(this.qtdElemento()).concat("\n"));
-        recursividadeCaminharOrdem(this.getRaiz());
+        this.escritor = new FileWriter("./src/main/java/com/mycompany/generalbinarytree/csv.txt");
+        this.escritor.write(String.valueOf(this.qntElementos).concat("\n"));
+        List<No<T>> array = new ArrayList<>();
+        this.cursor = this.raiz;
+        array.add(this.getRaiz());
+        while (array.size() > 0 || this.cursor != null) {
+            if (this.cursor != null) {
+                array.add(this.cursor);
+                this.cursor = this.cursor.getEsquerda();
+            } else {
+                this.cursor = array.remove(0);
+                this.escritor.write(this.cursor.getValor().toString().concat("\n"));
+                this.cursor = this.cursor.getDireita();
+            }
+        }
         this.escritor.close();
     }
 
-    private void recursividadeCaminharOrdem(No<T> no) throws IOException {
-        if(no != null){
-            recursividadeCaminharOrdem(no.getEsquerda());
-            this.escritor.write(no.getValor().toString().concat("\n"));
-            recursividadeCaminharOrdem(no.getDireita());
-        }
-    }
+//    private void recursividadeCaminharOrdem(No<T> no) throws IOException {;
+//        if(no != null){
+//            recursividadeCaminharOrdem(no.getEsquerda());
+//            this.escritor.write(no.getValor().toString().concat("\n"));
+//            recursividadeCaminharOrdem(no.getDireita());
+//        }
+//    }
 
     public boolean removeNo(T valor) {
         this.cursor = raiz;
@@ -149,6 +166,7 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
             }
             proxEsq.setDireita(cursor.getDireita());
         }
+        qntElementos--;
         return true;
     }
 
@@ -195,24 +213,31 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
         }
     }
 
-    public int altura() {
-        return altura(getRaiz());
+    public int getAltura() {
+        if (this.raiz == null) { return 0;}
+        int altura = 0;
+        List<No<T>> array = new ArrayList<>();
+        array.add(this.getRaiz());
+        while (array.size() > 0) {
+            if (array.get(0).getEsquerda() != null) { array.add(array.get(0).getEsquerda()); }
+            if (array.get(0).getDireita() != null) { array.add(array.get(0).getDireita()); }
+            altura++;
+            array.remove(0);
+        }
+        return altura;
+    }
+    
+    public int getQntElementos() {
+        return this.qntElementos;
     }
 
-    private int altura(No<T> no) {
-        if(no==null) {return -1;}
-        return 1 + Math.max(altura(no.getEsquerda()),altura(no.getDireita()));
-    }
+//    public int qtdElemento() {
+//        int teste = qtdElementoRecursividade(getRaiz());
+//        return teste;
+//    }
 
-    public int qtdElemento() {
-        int teste = qtdElementoRecursividade(getRaiz());
-        System.out.println(teste);
-        return teste;
-
-    }
-
-    private int qtdElementoRecursividade(No<T> no) {
-        if(no == null){return 0;}
-        return 1 + qtdElementoRecursividade(no.getEsquerda()) + qtdElementoRecursividade(no.getDireita());
-    }
+//    private int qtdElementoRecursividade(No<T> no) {
+//        if(no == null){return 0;}
+//        return 1 + qtdElementoRecursividade(no.getEsquerda()) + qtdElementoRecursividade(no.getDireita());
+//    }
 }
