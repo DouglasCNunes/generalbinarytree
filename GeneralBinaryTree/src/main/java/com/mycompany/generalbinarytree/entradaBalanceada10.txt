@@ -1,11 +1,11 @@
 10
-2000000005;Ucoovo Vaquvapo;97
-2000000002;Vulirol Dosoqof;56
-2000000001;Suicaa Xifohi;66
-2000000003;Hubita Vepu;87
-2000000004;Fua Goabiric;80
-2000000008;Yieo Vaduq;66
-2000000006;Udiusa Kiie;44
-2000000007;Pobohut Vawebeso;22
-2000000009;Esazia Tera;96
-2000000010;Dayihek Henufa;25
+2000000001;Emubive Pan;95
+2000000002;Dik Ihejik;81
+2000000003;Eup Fipaq;77
+2000000004;Afuiz Ivaz;41
+2000000005;Mue Taloqusu;73
+2000000006;Catoj Yozik;37
+2000000007;Puqedeqi Buzimu;77
+2000000008;Eba Samusisu;55
+2000000009;Nari Roko;54
+2000000010;Rupedal Saatut;54

@@ -34,11 +34,11 @@ public class GeneralBinaryTree {
         System.out.print("\nEscolha uma das opçoes abaixo: ");
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         //Leitura do arquivo de matrículas dos alunos
-        String nomeArquivoEntrada = "entradaOrdenada6000000.txt";
+        String nomeArquivoEntrada = "entradaBalanceada30.txt";
         boolean cheat = true;
-        File file = new File("./src/main/java/com/mycompany/generalbinarytree/" + nomeArquivoEntrada);
+        File file = new File("C:/Users/Douglas/Desktop/Codigos/generalbinarytree/GeneralBinaryTree/src/main/java/com/mycompany/generalbinarytree/" + nomeArquivoEntrada);
         Scanner scan = new Scanner(file);
         ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<Aluno>();
         String alunoLine;
@@ -48,11 +48,7 @@ public class GeneralBinaryTree {
             alunoLine = scan.nextLine();
             String[] stringParts = alunoLine.split(";");
             Aluno novo = new Aluno(Integer.valueOf(stringParts[0]), stringParts[1], Integer.valueOf(stringParts[2]));
-            if (nomeArquivoEntrada.indexOf("Ordenada") >= 0 && cheat == true) {
-                arvore.inserirNoOrdenado(novo);
-            } else {
-                arvore.inserirNo(novo);
-            }
+            arvore.inserirNo(novo);
         }
         System.out.println("\nTimestamp depois do carregamento: " + System.currentTimeMillis());
         scan.close();
@@ -63,7 +59,7 @@ public class GeneralBinaryTree {
         int escolha;
         escolha = input.nextInt();
         while(escolha != 5) {
-            clearScreen();
+            //clearScreen();
             switch(escolha){
                 case 1:
                     System.out.println("-------------- Exibir Estatísticas --------------");
@@ -109,7 +105,7 @@ public class GeneralBinaryTree {
                     } else { 
                         System.out.println("\nAluno com a matrícula "+matriculaIncluir+" ja existe.");
                     }
-                    break;                    
+                    break;
             }
             menu();
             escolha = input.nextInt();

@@ -14,12 +14,6 @@ import java.util.List;
 
 public class ArvoreBinaria<T extends Comparable<? super T>> {
     private No<T> raiz;
-    private T valor;
-    private No<T> cursor;
-    private No<T> cursorPai;
-    private File arquivo;
-    private FileWriter escritor;
-    private No<T> ultimoNoInserido;
     private int qntElementos;
 
     public ArvoreBinaria() {this.raiz = null;}
@@ -29,15 +23,15 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
     public T buscarNo(T valor) {
         if(raiz==null) { return null;}
         
-        this.cursor = this.raiz;
+        No<T> cursor = this.raiz;
 
-        while (this.cursor != null) {
+        while (cursor != null) {
             if(valor.compareTo(cursor.getValor()) < 0) {
-                this.cursor = this.cursor.getEsquerda();
+                cursor = cursor.getEsquerda();
             } else if(valor.compareTo(cursor.getValor()) > 0) {
-                this.cursor = this.cursor.getDireita();
+                cursor = cursor.getDireita();
             } else {
-                return this.cursor.getValor();
+                return cursor.getValor();
             }
         }
         return null;
@@ -51,21 +45,22 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
             return true;
         }
         
-        this.valor = novo;
-        this.cursor = this.raiz;
+        T valor = novo;
+        No<T> cursor = this.raiz;
 
-        while(valor.compareTo(cursor.getValor()) != 0) {            
-            if (valor.compareTo(cursor.getValor()) < 0 && this.cursor.getEsquerda() != null) {
-                this.cursor = this.cursor.getEsquerda();
-            } else if(valor.compareTo(cursor.getValor()) > 0 && this.cursor.getDireita() != null) {
-                this.cursor = this.cursor.getDireita();
+        // Caminhar até encontrar o futuro Nó pai
+        while(valor.compareTo(cursor.getValor()) != 0) {  // Enquando não achar um Nó igual a Valor...    
+            if (valor.compareTo(cursor.getValor()) < 0 && cursor.getEsquerda() != null) {
+                cursor = cursor.getEsquerda();
+            } else if(valor.compareTo(cursor.getValor()) > 0 && cursor.getDireita() != null) {
+                cursor = cursor.getDireita();
             } else {
                 if (valor.compareTo(cursor.getValor()) < 0) {
-                    this.cursor.setEsquerda(novoNo);
+                    cursor.setEsquerda(novoNo);
                     qntElementos++;
                     return true;
                 } else if (valor.compareTo(cursor.getValor()) > 0) {
-                    this.cursor.setDireita(novoNo);
+                    cursor.setDireita(novoNo);
                     qntElementos++;
                     return true;
                 }
@@ -74,51 +69,44 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
         return false;
     }
     
-    public void inserirNoOrdenado(T novo) {
-        No<T> novoNo = new No<T>(novo);
-        if (this.raiz == null) {
-            this.raiz = novoNo;
-        } else {
-            this.ultimoNoInserido.setDireita(novoNo);
-        }
-        this.ultimoNoInserido = novoNo;
-        qntElementos++;
-    }
-
     public void caminharOrdem() throws IOException {
-        this.escritor = new FileWriter("./src/main/java/com/mycompany/generalbinarytree/csv.txt");
-        this.escritor.write(String.valueOf(this.qntElementos).concat("\n"));
+        FileWriter escritor;
+        escritor = new FileWriter("./src/main/java/com/mycompany/generalbinarytree/csv.txt");
+        escritor.write(String.valueOf(this.qntElementos).concat("\n"));
         List<No<T>> array = new ArrayList<>();
-        this.cursor = this.raiz;
+        No<T> cursor = this.raiz;
         array.add(this.getRaiz());
-        while (array.size() > 0 || this.cursor != null) {
-            if (this.cursor != null) {
-                array.add(this.cursor);
-                this.cursor = this.cursor.getEsquerda();
+        while (array.size() > 0 || cursor != null) {
+            if (cursor != null) {
+                array.add(cursor);
+                cursor = cursor.getEsquerda();
             } else {
-                this.cursor = array.remove(0);
-                this.escritor.write(this.cursor.getValor().toString().concat("\n"));
-                this.cursor = this.cursor.getDireita();
+                cursor = array.remove(0);
+                escritor.write(cursor.getValor().toString().concat("\n"));
+                cursor = cursor.getDireita();
             }
         }
-        this.escritor.close();
+        escritor.close();
     }
 
-//    private void recursividadeCaminharOrdem(No<T> no) throws IOException {;
-//        if(no != null){
-//            recursividadeCaminharOrdem(no.getEsquerda());
-//            this.escritor.write(no.getValor().toString().concat("\n"));
-//            recursividadeCaminharOrdem(no.getDireita());
-//        }
-//    }
+    public void caminharOrdem2() throws IOException {
+        recursividadeCaminharOrdem2(this.raiz);
+    }
+    private void recursividadeCaminharOrdem2(No<T> no) throws IOException {;
+        if(no != null){
+            recursividadeCaminharOrdem2(no.getEsquerda());
+            System.out.println((no.getValor().toString()));
+            recursividadeCaminharOrdem2(no.getDireita());
+        }
+    }
 
     public boolean removeNo(T valor) {
-        this.cursor = raiz;
-        this.cursorPai = raiz;
-        boolean ehFilhoEsq = true;
+        No<T> cursor = raiz;
+        No<T> cursorPai = raiz;
+        boolean ehFilhoEsq = true;  //Guarda a informação se o curso é filho da esquerda ou direita
 
         while(cursor.getValor().compareTo(valor)!=0) {
-            this.cursorPai = this.cursor;
+            cursorPai = cursor;
             //Comparação com o valor a ser removido e o nó atual a ser analisado
             if(valor.compareTo(cursor.getValor()) < 0) {
                 ehFilhoEsq = true;
@@ -131,15 +119,20 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
                 return false;
             }
         }
-        if(cursor.getEsquerda()==null && cursor.getDireita()==null) { // <<<< No a ser removido não tem filhos >>>>>
+        
+        // Exclusão Nó sem filhos
+        if(cursor.getEsquerda()==null && cursor.getDireita()==null) {
             if(cursor==raiz) {
                 raiz=null;
+                System.out.println("raiz deletada");
             } else if (ehFilhoEsq) { //Se é filho esquerda, remove do curso pai a esquerda
                 cursorPai.setEsquerda(null);
             } else { //Se é filho direita, remove do curso pai a direita
                 cursorPai.setDireita(null);
             }
-        } else if(cursor.getDireita()==null) { // <<<< No a ser removido tem filho a Esquerda >>>>
+
+        // Exclusão Nó com 1 filho a esquerda
+        } else if(cursor.getDireita()==null) {
             if(cursor==raiz) {
                 raiz=cursor.getEsquerda();
             } else if(ehFilhoEsq) {
@@ -147,15 +140,18 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
             } else {
                 cursorPai.setDireita(cursor.getEsquerda());
             }
-        } else if(cursor.getEsquerda()==null) { // <<<< No a ser removido tem filho a Direita >>>>
+
+        // Exclusão Nó com 1 filho a direita
+        } else if(cursor.getEsquerda()==null) {
             if(cursor==raiz) {
                 raiz=cursor.getDireita();
             } else if(ehFilhoEsq) {
-                cursorPai.setDireita(cursor.getDireita());
-            } else {
                 cursorPai.setEsquerda(cursor.getDireita());
+            } else {
+                cursorPai.setDireita(cursor.getDireita());
             }
         } else {
+        // Exclusão Nó com 2 filhos
             No<T> proxEsq = retornaNoProx(cursor);
             if(cursor==raiz) {
                 raiz = proxEsq;
@@ -170,7 +166,7 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
         return true;
     }
 
-    private No<T> retornaNoProx(No<T> atual) { // Função que retorna o nó de valor anterior (proxEsq) ao nó a ser removido
+    private No<T> retornaNoProx(No<T> atual) { // (Chamada em removeNo) Função que retorna o nó de valor anterior (proxEsq) ao nó a ser removido
         No<T> proxEsq = atual;
         No<T> proEsqPai = atual;
         No<T> cursor = atual.getEsquerda();
@@ -187,19 +183,19 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
     }
 
     public No<T> menorElemento() {
-        this.cursor = this.raiz;
-        while(this.cursor.getEsquerda() != null) {
-            this.cursor = this.cursor.getEsquerda();
+        No<T> cursor = this.raiz;
+        while(cursor.getEsquerda() != null) {
+            cursor = cursor.getEsquerda();
         }
-        return this.cursor;
+        return cursor;
     }
 
     public No<T> maiorElemento() {
-        this.cursor = this.raiz;
-        while(this.cursor.getDireita() != null) {
-            this.cursor = this.cursor.getDireita();
+        No<T> cursor = this.raiz;
+        while(cursor.getDireita() != null) {
+            cursor = cursor.getDireita();
         }
-        return this.cursor;
+        return cursor;
     }
       
     public void caminharNivel() {
@@ -218,26 +214,36 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
         int altura = 0;
         List<No<T>> array = new ArrayList<>();
         array.add(this.getRaiz());
-        while (array.size() > 0) {
-            if (array.get(0).getEsquerda() != null) { array.add(array.get(0).getEsquerda()); }
-            if (array.get(0).getDireita() != null) { array.add(array.get(0).getDireita()); }
+        while (!array.isEmpty()) {
+            int tamanhoatual = array.size();
+            while(tamanhoatual-- > 0) {
+                if (array.get(0).getEsquerda() != null) { array.add(array.get(0).getEsquerda()); }
+                if (array.get(0).getDireita() != null) { array.add(array.get(0).getDireita()); }
+                array.remove(0);
+            }
             altura++;
-            array.remove(0);
         }
-        return altura;
+        return altura-1;
     }
     
     public int getQntElementos() {
         return this.qntElementos;
     }
 
-//    public int qtdElemento() {
-//        int teste = qtdElementoRecursividade(getRaiz());
-//        return teste;
-//    }
-
-//    private int qtdElementoRecursividade(No<T> no) {
-//        if(no == null){return 0;}
-//        return 1 + qtdElementoRecursividade(no.getEsquerda()) + qtdElementoRecursividade(no.getDireita());
-//    }
+    public T piorCaso() { // Returna o primeiro elemento do útimo nível da arvore
+        if (this.raiz == null) { return null; } // Se a arvore estiver fazia, nao há pior caso
+        T valor = null;
+        List<No<T>> array = new ArrayList<>();
+        array.add(this.getRaiz());
+        while (!array.isEmpty()) {
+            int tamanhoatual = array.size();
+            while(tamanhoatual-- > 0) { // Enquanto nao acabar os elementos do nivel
+                if (array.get(0).getEsquerda() != null) { array.add(array.get(0).getEsquerda()); }
+                if (array.get(0).getDireita() != null) { array.add(array.get(0).getDireita()); }
+                array.remove(0);
+            }
+            if(array.size()>0) { valor = array.get(0).getValor(); } // Pegar o primeiro elemento do nível
+        }
+        return valor;
+    }
 }
