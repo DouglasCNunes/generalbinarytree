@@ -9,11 +9,12 @@ public class ArvoreAVL<T extends Comparable<? super T>> extends ArvoreBinaria<T>
             return null;
         }
         if(pai.fatorBalanceamento()>1) {
-            if(pai.getEsquerda().fatorBalanceamento() > 0)
+            if(pai.getDireita().fatorBalanceamento() > 0)
                 pai = this.rotacaoEsquerda(pai);
             else
                 pai = this.rotacaoDireitaEsquerda(pai);
-        } else if(pai.fatorBalanceamento()<-1) {
+        } 
+        else if(pai.fatorBalanceamento()<-1) {
             if(pai.getEsquerda().fatorBalanceamento() < 0)
                 pai = this.rotacaoDireita(pai);
             else

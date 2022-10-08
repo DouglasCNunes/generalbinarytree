@@ -37,8 +37,8 @@ public class GeneralBinaryTree {
     public static void main(String[] args) throws IOException {
         //Leitura do arquivo de matrículas dos alunos
         String nomeArquivoEntrada = "entradaBalanceada30.txt";
-        // File file = new File("C:/Users/Douglas/Desktop/Codigos/generalbinarytree/GeneralBinaryTree/src/main/java/com/mycompany/generalbinarytree/" + nomeArquivoEntrada);
-        File file = new File("./src/main/java/com/mycompany/generalbinarytree/" + nomeArquivoEntrada);
+        File file = new File("C:/Users/Douglas/Desktop/Codigos/generalbinarytree/GeneralBinaryTree/src/main/java/com/mycompany/generalbinarytree/" + nomeArquivoEntrada);
+        //File file = new File("./src/main/java/com/mycompany/generalbinarytree/" + nomeArquivoEntrada);
         Scanner scan = new Scanner(file);
         ArvoreAVL<Aluno> arvore = new ArvoreAVL<Aluno>();
         String alunoLine;
@@ -111,6 +111,7 @@ public class GeneralBinaryTree {
                     break;
                 case 7:
                     arvore.caminharNivel();
+                    break;
 
             }
             menu();

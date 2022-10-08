@@ -71,7 +71,7 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
     
     public void caminharOrdem() throws IOException {
         FileWriter escritor;
-        escritor = new FileWriter("./src/main/java/com/mycompany/generalbinarytree/csv.txt");
+        escritor = new FileWriter("C:/Users/Douglas/Desktop/Codigos/generalbinarytree/GeneralBinaryTree/src/main/java/com/mycompany/generalbinarytree/csv.txt");
         escritor.write(String.valueOf(this.qntElementos).concat("\n"));
         List<No<T>> array = new ArrayList<>();
         No<T> cursor = this.raiz;

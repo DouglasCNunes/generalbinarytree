@@ -24,12 +24,14 @@ public class No<T extends Comparable<? super T>> {
     }
 
     public int obterAltura(No<T> r) {
-        if(r==null) { return -1; }
+        if(r==null)
+            return -1;
+        else {
             int hd = obterAltura(r.getDireita());
             int he = obterAltura(r.getEsquerda());
-        if (hd > he) {
+        if (hd > he)
             return hd+1;
-        } else {
+        else
             return he+1;
         }
     }
