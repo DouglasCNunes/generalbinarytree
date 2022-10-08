@@ -40,7 +40,7 @@ public class GeneralBinaryTree {
         boolean cheat = true;
         File file = new File("C:/Users/Douglas/Desktop/Codigos/generalbinarytree/GeneralBinaryTree/src/main/java/com/mycompany/generalbinarytree/" + nomeArquivoEntrada);
         Scanner scan = new Scanner(file);
-        ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<Aluno>();
+        ArvoreAVL<Aluno> arvore = new ArvoreAVL<Aluno>();
         String alunoLine;
         alunoLine = scan.nextLine();
         System.out.println("\nTimestamp antes do carregamento: " + System.currentTimeMillis());
@@ -100,12 +100,18 @@ public class GeneralBinaryTree {
                     System.out.print("\nDigite a nota: ");
                     int notaIncluir = input.nextInt();                    
                     Aluno alunoIncluir = new Aluno(matriculaIncluir,nomeIncluir,notaIncluir);
-                    if(arvore.inserirNo(alunoIncluir)) {
+                    if(arvore.inserirNo(alunoIncluir)!=null) {
                         System.out.println("\nAluno com a matrícula "+matriculaIncluir+" inserido.");
                     } else { 
                         System.out.println("\nAluno com a matrícula "+matriculaIncluir+" ja existe.");
                     }
                     break;
+                case 6:
+                    arvore.caminharOrdem2();
+                    break;
+                case 7:
+                    arvore.caminharNivel();
+
             }
             menu();
             escolha = input.nextInt();

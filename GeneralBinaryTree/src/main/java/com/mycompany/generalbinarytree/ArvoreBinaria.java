@@ -37,12 +37,12 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
         return null;
     }
 
-    public boolean inserirNo(T novo) {
+    public No<T> inserirNo(T novo) {
         No<T> novoNo = new No<T>(novo);
         if (this.raiz == null) {
             this.raiz = novoNo;
             qntElementos++;
-            return true;
+            return novoNo;
         }
         
         T valor = novo;
@@ -58,15 +58,15 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
                 if (valor.compareTo(cursor.getValor()) < 0) {
                     cursor.setEsquerda(novoNo);
                     qntElementos++;
-                    return true;
+                    return cursor;
                 } else if (valor.compareTo(cursor.getValor()) > 0) {
                     cursor.setDireita(novoNo);
                     qntElementos++;
-                    return true;
+                    return cursor;
                 }
             }
         }
-        return false;
+        return null;
     }
     
     public void caminharOrdem() throws IOException {
