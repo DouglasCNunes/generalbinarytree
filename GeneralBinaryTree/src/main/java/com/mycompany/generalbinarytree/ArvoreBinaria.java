@@ -37,39 +37,27 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
         return null;
     }
 
-    public No<T> inserirNo(T novo) {
-        No<T> novoNo = new No<T>(novo);
-        if (this.raiz == null) {
-            this.raiz = novoNo;
-            qntElementos++;
-            return novoNo;
-        }
-        
-        T valor = novo;
-        No<T> cursor = this.raiz;
-        No<T> paiCursor = null;
+    public void inserirNo(T valor) {
+        No<T> novoNo = new No<T>(valor);
+        if(this.raiz==null) { this.raiz = novoNo; }
+        else { this.raiz = inserirNoRecursao(this.raiz, novoNo); }
+    }
 
-        // Caminhar até encontrar o futuro Nó pai
-        while(valor.compareTo(cursor.getValor()) != 0) {  // Enquando não achar um Nó igual a Valor...    
-            if (valor.compareTo(cursor.getValor()) < 0 && cursor.getEsquerda() != null) {
-                cursor = cursor.getEsquerda();
-                paiCursor = cursor;
-            } else if(valor.compareTo(cursor.getValor()) > 0 && cursor.getDireita() != null) {
-                cursor = cursor.getDireita();
-                paiCursor = cursor;
+    protected No<T> inserirNoRecursao(No<T> cursor, No<T> novoNo) {
+        if(novoNo.getValor().compareTo(cursor.getValor()) < 0 ) {
+            if(cursor.getEsquerda()==null) {
+                cursor.setEsquerda(novoNo);
             } else {
-                if (valor.compareTo(cursor.getValor()) < 0) {
-                    cursor.setEsquerda(novoNo);
-                    qntElementos++;
-                    return paiCursor;
-                } else if (valor.compareTo(cursor.getValor()) > 0) {
-                    cursor.setDireita(novoNo);
-                    qntElementos++;
-                    return paiCursor;
-                }
+                cursor.setEsquerda(inserirNoRecursao(cursor.getEsquerda(), novoNo));
+            }
+        } else {
+            if(cursor.getDireita()==null) {
+                cursor.setDireita(novoNo);
+            } else {
+                cursor.setDireita(inserirNoRecursao(cursor.getDireita(), novoNo));
             }
         }
-        return null;
+        return cursor;
     }
     
     public void caminharOrdem() throws IOException {

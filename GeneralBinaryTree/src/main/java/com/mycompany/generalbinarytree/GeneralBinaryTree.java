@@ -100,7 +100,8 @@ public class GeneralBinaryTree {
                     System.out.print("\nDigite a nota: ");
                     int notaIncluir = input.nextInt();                    
                     Aluno alunoIncluir = new Aluno(matriculaIncluir,nomeIncluir,notaIncluir);
-                    if(arvore.inserirNo(alunoIncluir)!=null) {
+                    if(arvore.buscarNo(alunoIncluir)!=null) {
+                        arvore.inserirNo(alunoIncluir);
                         System.out.println("\nAluno com a matrícula "+matriculaIncluir+" inserido.");
                     } else { 
                         System.out.println("\nAluno com a matrícula "+matriculaIncluir+" ja existe.");

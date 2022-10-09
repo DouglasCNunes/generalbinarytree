@@ -3,8 +3,8 @@ package com.mycompany.generalbinarytree;
 public class ArvoreAVL<T extends Comparable<? super T>> extends ArvoreBinaria<T> {
 
     @Override
-    public No<T> inserirNo(T novo) {
-        No<T> pai = super.inserirNo(novo);
+    protected No<T> inserirNoRecursao(No<T> pai, No<T> novoNo) {
+        pai = super.inserirNoRecursao(pai,novoNo);
         if(pai==null) {
             return null;
         }
