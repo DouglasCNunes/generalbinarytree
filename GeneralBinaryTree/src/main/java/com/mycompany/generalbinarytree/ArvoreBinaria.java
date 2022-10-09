@@ -47,22 +47,25 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
         
         T valor = novo;
         No<T> cursor = this.raiz;
+        No<T> paiCursor = null;
 
         // Caminhar até encontrar o futuro Nó pai
         while(valor.compareTo(cursor.getValor()) != 0) {  // Enquando não achar um Nó igual a Valor...    
             if (valor.compareTo(cursor.getValor()) < 0 && cursor.getEsquerda() != null) {
                 cursor = cursor.getEsquerda();
+                paiCursor = cursor;
             } else if(valor.compareTo(cursor.getValor()) > 0 && cursor.getDireita() != null) {
                 cursor = cursor.getDireita();
+                paiCursor = cursor;
             } else {
                 if (valor.compareTo(cursor.getValor()) < 0) {
                     cursor.setEsquerda(novoNo);
                     qntElementos++;
-                    return cursor;
+                    return paiCursor;
                 } else if (valor.compareTo(cursor.getValor()) > 0) {
                     cursor.setDireita(novoNo);
                     qntElementos++;
-                    return cursor;
+                    return paiCursor;
                 }
             }
         }
