@@ -5,9 +5,7 @@ public class ArvoreAVL<T extends Comparable<? super T>> extends ArvoreBinaria<T>
     @Override
     protected No<T> inserirNoRecursao(No<T> pai, No<T> novoNo) {
         pai = super.inserirNoRecursao(pai,novoNo);
-        if(pai==null) {
-            return null;
-        }
+
         if(pai.fatorBalanceamento()>1) {
             if(pai.getDireita().fatorBalanceamento() > 0)
                 pai = this.rotacaoEsquerda(pai);
