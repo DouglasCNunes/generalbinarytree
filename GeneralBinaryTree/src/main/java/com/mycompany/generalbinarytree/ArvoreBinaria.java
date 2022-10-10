@@ -80,17 +80,6 @@ public class ArvoreBinaria<T extends Comparable<? super T>> {
         escritor.close();
     }
 
-    public void caminharOrdem2() throws IOException {
-        recursividadeCaminharOrdem2(this.raiz);
-    }
-    private void recursividadeCaminharOrdem2(No<T> no) throws IOException {;
-        if(no != null){
-            recursividadeCaminharOrdem2(no.getEsquerda());
-            System.out.println((no.getValor().toString()));
-            recursividadeCaminharOrdem2(no.getDireita());
-        }
-    }
-
     public boolean removeNo(T valor) {
         No<T> cursor = raiz;
         No<T> cursorPai = raiz;

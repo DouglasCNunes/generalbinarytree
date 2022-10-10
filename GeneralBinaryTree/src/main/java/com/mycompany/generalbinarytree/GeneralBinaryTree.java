@@ -30,27 +30,44 @@ public class GeneralBinaryTree {
         System.out.println(" 2 - Efetuar busca por matrícula.");
         System.out.println(" 3 - Excluir por matrícula.");
         System.out.println(" 4 - Incluir aluno");
-        System.out.println(" 5 - Sair.");
+        System.out.println(" 5 - Altura das árvores");
+        System.out.println(" 6 - Sair.");
         System.out.print("\nEscolha uma das opçoes abaixo: ");
     }
 
     public static void main(String[] args) throws IOException {
-        //Leitura do arquivo de matrículas dos alunos
-        String nomeArquivoEntrada = "entradaBalanceada20000.txt";
-        File file = new File("C:/Users/Douglas/Desktop/Codigos/generalbinarytree/GeneralBinaryTree/src/main/java/com/mycompany/generalbinarytree/" + nomeArquivoEntrada);
-        //File file = new File("./src/main/java/com/mycompany/generalbinarytree/" + nomeArquivoEntrada);
-        Scanner scan = new Scanner(file);
-        ArvoreAVL<Aluno> arvore = new ArvoreAVL<Aluno>();
+        String nomeArquivoEntrada = "entradaBalanceada15000.txt";
+        //File file = new File("C:/Users/Douglas/Desktop/Codigos/generalbinarytree/GeneralBinaryTree/src/main/java/com/mycompany/generalbinarytree/" + nomeArquivoEntrada);
+        File file = new File("./src/main/java/com/mycompany/generalbinarytree/" + nomeArquivoEntrada);
+        Scanner scan;
         String alunoLine;
+        
+        //Leitura do arquivo de matrículas dos alunos na árvore binária
+        ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<Aluno>();
+        scan = new Scanner(file);
         alunoLine = scan.nextLine();
-        System.out.println("\nTimestamp antes do carregamento: " + System.currentTimeMillis());
+        System.out.println("\nTimestamp antes do carregamento árvore binária: " + System.currentTimeMillis());
         while(scan.hasNextLine()) {
             alunoLine = scan.nextLine();
             String[] stringParts = alunoLine.split(";");
             Aluno novo = new Aluno(Integer.valueOf(stringParts[0]), stringParts[1], Integer.valueOf(stringParts[2]));
             arvore.inserirNo(novo);
         }
-        System.out.println("\nTimestamp depois do carregamento: " + System.currentTimeMillis());
+        System.out.println("\nTimestamp depois do carregamento árvore binária: " + System.currentTimeMillis());
+        scan.close();
+        
+        //Leitura do arquivo de matrículas dos alunos na árvore binária balanceada
+        ArvoreAVL<Aluno> arvoreAVL = new ArvoreAVL<Aluno>();
+        scan = new Scanner(file);
+        alunoLine = scan.nextLine();
+        System.out.println("\nTimestamp antes do carregamento árvore binária balanceada: " + System.currentTimeMillis());
+        while(scan.hasNextLine()) {
+            alunoLine = scan.nextLine();
+            String[] stringParts = alunoLine.split(";");
+            Aluno novo = new Aluno(Integer.valueOf(stringParts[0]), stringParts[1], Integer.valueOf(stringParts[2]));
+            arvoreAVL.inserirNo(novo);
+        }
+        System.out.println("\nTimestamp depois do carregamento árvore binária balanceada: " + System.currentTimeMillis());
         scan.close();
 
         //Menu
@@ -58,8 +75,8 @@ public class GeneralBinaryTree {
         Scanner input = new Scanner(System.in);
         int escolha;
         escolha = input.nextInt();
-        while(escolha != 5) {
-            //clearScreen();
+        while(escolha != 6) {
+            clearScreen();
             switch(escolha){
                 case 1:
                     System.out.println("-------------- Exibir Estatísticas --------------");
@@ -107,13 +124,9 @@ public class GeneralBinaryTree {
                         System.out.println("\nAluno com a matrícula "+matriculaIncluir+" ja existe.");
                     }
                     break;
-                case 6:
-                    arvore.caminharOrdem2();
-                    break;
-                case 7:
-                    arvore.caminharNivel();
-                    break;
-
+                case 5:
+                    System.out.println("Altura da árvore binária: " + arvore.getAltura());
+                    System.out.println("Altura da árvore binária balanceada: " + arvoreAVL.getAltura());
             }
             menu();
             escolha = input.nextInt();
